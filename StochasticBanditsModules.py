@@ -1,6 +1,5 @@
 import numpy
 import pandas
-import matplotlib.pyplot as plt
 
 
 class Environment:
@@ -21,13 +20,19 @@ class GaussianArm:
         self.mean = mean
         self.variance = variance
         self.environment = environment
+        self.history = pandas.array([])
         environment.K.append(self)
 
     def __del__(self):
         pass
 
-    def pullArm(self):
-        self.environment.armPulled.append(self)
-        self.environment.gain.append(numpy.random.normal(self.mean, self.variance))
+    def pullArm(self, log_val=True):
+        gain_val = numpy.random.normal(self.mean, self.variance)
+        if log_val-True:
+            self.environment.armPulled.append(self)
+            self.environment.gain.append(gain_val)
+            self.history.append(gain_val)
+        else:
+            return gain_val
 
 # TODO: BernoulliArm, BetaArm, ExponentialArm, GammaArm, PoissonArm, UniformArm
