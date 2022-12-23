@@ -16,10 +16,11 @@ class Environment:
         return self.K
 
 
+# noinspection PyTypeChecker
 class GaussianArm:
-    def __init__(self, environment, mean, variance=1, silent=False):
+    def __init__(self, environment, mean, variance_square=0.5, silent=False):
         self.mean = mean
-        self.variance = variance
+        self.variance_square = variance_square
         self.environment = environment
         self.history = numpy.array([])
         self.silent = silent
@@ -34,14 +35,55 @@ class GaussianArm:
 
     def pullArm(self, log_val=True):
 
-        gain_val = numpy.random.normal(self.mean, self.variance)
+        gain_val = numpy.random.normal(self.mean, numpy.sqrt(self.variance_square))
 
         if not self.silent and log_val:
             self.environment.armPulled = numpy.append(self.environment.armPulled, self)
             self.environment.gain = numpy.append(self.environment.gain, gain_val)
             self.history = numpy.append(self.history, gain_val)
-            return None
+
+
         else:
-            return gain_val
+            pass
+
+        return gain_val
+
+
+class PrioriGaussianArm(GaussianArm):
+
+    def __init__(self, environment, priori_mean, priori_variance_square=0.5, silent=False):
+        self.priori_mean = priori_mean
+        self.priori_variance_square = priori_variance_square
+
+        mean = numpy.random.normal(priori_mean, priori_variance_square)
+
+        self.posterior_mean = mean
+        self.posterior_variance_square = 0.5
+
+        super().__init__(environment, mean, 0.5, silent)
+
+
+def arm_mean(arm_p):
+    return arm_p.mean
+
+
+def arm_posterior_mean(arm_p):
+    return arm_p.posterior_mean
+
+
+def arm_priori_mean(arm_p):
+    return arm_p.priori_mean
+
+
+def arm_variance_square(arm_p):
+    return arm_p.variance_square
+
+
+def arm_posterior_variance_square(arm_p):
+    return arm_p.posterior_variance_square
+
+
+def arm_priori_variance_square(arm_p):
+    return arm_p.priori_variance_square
 
 # TODO: BernoulliArm, BetaArm, ExponentialArm, GammaArm, PoissonArm, UniformArm
