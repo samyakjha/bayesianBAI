@@ -95,7 +95,7 @@ for horizon in tqdm(horizon_vals):
 
 # Plotting the results
 matplotlib.pyplot.plot(horizon_vals, numpy.log10(probability_array_bayes, where=probability_array_bayes > 0),
-                       label='BayedElim2')
+                       label='BayesElim2')
 matplotlib.pyplot.plot(horizon_vals, numpy.log10(probability_array_freq, where=probability_array_freq > 0),
                        label='FreqElim2')
 matplotlib.pyplot.xlabel('Horizon')
