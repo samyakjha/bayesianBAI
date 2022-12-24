@@ -93,11 +93,10 @@ for horizon in tqdm(horizon_vals):
     probability_array_freq = numpy.append(probability_array_freq, 1 - (sum_val_freq / N))
     probability_array_bayes = numpy.append(probability_array_bayes, 1 - (sum_val_bayes / N))
 
+
 # Plotting the results
-matplotlib.pyplot.plot(horizon_vals, numpy.log10(probability_array_bayes, where=probability_array_bayes > 0),
-                       label='BayesElim2')
-matplotlib.pyplot.plot(horizon_vals, numpy.log10(probability_array_freq, where=probability_array_freq > 0),
-                       label='FreqElim2')
+matplotlib.pyplot.plot(horizon_vals, probability_array_bayes, label='BayesElim2')
+matplotlib.pyplot.plot(horizon_vals, probability_array_freq,  label='FreqElim2')
 matplotlib.pyplot.xlabel('Horizon')
-matplotlib.pyplot.ylabel('log-probability of Misidentification of Optimal Arm')
+matplotlib.pyplot.ylabel('Probability of Misidentification of Optimal Arm')
 matplotlib.pyplot.savefig('analysis.png')
