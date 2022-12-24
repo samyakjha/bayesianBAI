@@ -66,7 +66,11 @@ class PrioriGaussianArm(GaussianArm):
 def arm_mean(arm_p):
     return arm_p.mean
 
-
+def arm_empirical_mean(arm_p):
+    if len(arm_p.history) != 0:
+        return numpy.sum(arm_p.history) / len(arm_p.history)
+    else:
+        return int(0)
 def arm_posterior_mean(arm_p):
     return arm_p.posterior_mean
 
