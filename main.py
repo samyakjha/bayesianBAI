@@ -91,6 +91,7 @@ for horizon in tqdm(horizon_vals):
             sum_val_freq = sum_val_freq + 1
 
     probability_array_freq = numpy.append(probability_array_freq, 1 - (sum_val_freq / N))
+    probability_array_bayes = numpy.append(probability_array_bayes, 1 - (sum_val_bayes / N))
 
 # Plotting the results
 matplotlib.pyplot.plot(horizon_vals, numpy.log10(probability_array_bayes, where=probability_array_bayes > 0),
