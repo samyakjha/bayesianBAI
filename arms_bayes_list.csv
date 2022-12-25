@@ -1,0 +1,9 @@
+,arm,posterior_mean,posterior_variance_square,priori_mean,priori_variance_square,empirical_mean,empirical_variance_square,mean,variance_square,number_of_pulls
+0,<StochasticBanditsModules.PrioriGaussianArm object at 0x7f8b1129f670>,1.0861410238688267,0.5,1.0,0.5,0,0.5,1.0861410238688267,0.5,0.0
+1,<StochasticBanditsModules.PrioriGaussianArm object at 0x7f8b1129f700>,0.41730964991641534,0.5,0.5,0.5,0,0.5,0.41730964991641534,0.5,0.0
+2,<StochasticBanditsModules.PrioriGaussianArm object at 0x7f8b1129f760>,0.17583613517760313,0.5,0.25,0.5,0,0.5,0.17583613517760313,0.5,0.0
+3,<StochasticBanditsModules.PrioriGaussianArm object at 0x7f8b1129f790>,-0.5643505064566409,0.5,0.125,0.5,0,0.5,-0.5643505064566409,0.5,0.0
+4,<StochasticBanditsModules.PrioriGaussianArm object at 0x7f8b1129f7c0>,-0.0866834045133563,0.5,0.0625,0.5,0,0.5,-0.0866834045133563,0.5,0.0
+5,<StochasticBanditsModules.PrioriGaussianArm object at 0x7f8b1129f7f0>,-0.14626831772369267,0.5,0.03125,0.5,0,0.5,-0.14626831772369267,0.5,0.0
+6,<StochasticBanditsModules.PrioriGaussianArm object at 0x7f8b1129f820>,-0.21000764444568965,0.5,0.015625,0.5,0,0.5,-0.21000764444568965,0.5,0.0
+7,<StochasticBanditsModules.PrioriGaussianArm object at 0x7f8b1129f850>,0.761648650187135,0.5,0.0078125,0.5,0,0.5,0.761648650187135,0.5,0.0

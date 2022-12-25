@@ -30,6 +30,10 @@ class GaussianArm:
         else:
             pass
 
+    @classmethod
+    def sum_val(cls, arm):
+        return numpy.sum(arm.history)
+
     def __del__(self):
         pass
 
@@ -47,7 +51,8 @@ class GaussianArm:
             pass
 
         return gain_val
-
+    def sum_val(self):
+        return numpy.sum(self.history)
 
 class PrioriGaussianArm(GaussianArm):
 
