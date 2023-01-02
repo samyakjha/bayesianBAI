@@ -42,11 +42,10 @@ for horizon in horizon_vals:
             new_arm = StochasticBanditsModules.PrioriGaussianArm(experiment_bayes, 1 / (2 ** i))
 
         arms_bayes = experiment_bayes.listArms()
-        arms_bayes_list = pandas.DataFrame({'arms':arms_bayes,'priori_mean':arm_priori_mean_vectorized(arms_bayes),
-                                            'variance_square':arm_variance_square_vectorized(arms_bayes), 'posterior_mean':arm_posterior_mean_vectorized(arms_bayes),
-                                            'posterior_variance_square':arm_posterior_variance_square_vectorized(arms_bayes),
-                                            'empirical_mean':arm_empirical_mean_vectorized(arms_bayes),
-                                            'mean':arm_mean_vectorized(arms_bayes), 'priori_variance_square':arm_variance_square_vectorized(arms_bayes)})
+        arms_bayes_list = pandas.DataFrame({'arms':pandas.Series(arms_bayes),'priori_mean':pandas.Series(arm_priori_mean_vectorized(arms_bayes)),
+                                            'variance_square':pandas.Series(arm_variance_square_vectorized(arms_bayes)), 'posterior_mean':pandas.Series(arm_posterior_mean_vectorized(arms_bayes)), 'posterior_variance_square':pandas.Series(arm_posterior_variance_square_vectorized(arms_bayes)),
+                                            'empirical_mean':pandas.Series(arm_empirical_mean_vectorized(arms_bayes)),
+                                            'mean':pandas.Series(arm_mean_vectorized(arms_bayes)), 'priori_variance_square':pandas.Series(arm_variance_square_vectorized(arms_bayes))})
 
 
         optimal_mean_bayes = numpy.amax(arms_bayes_list[["mean"]])
@@ -57,7 +56,7 @@ for horizon in horizon_vals:
             arms_bayes_list[["number_of_pulls"]] = arms_bayes_list[["number_of_pulls"]].astype(int)
 
             print(type(arms_bayes_list))
-            for row in arms_bayes_list.itertuples():
+            for row in arms_bayes_list.itertuples:
                 for i in range(int(row.number_of_pulls)):
                     row.arms.pullArm()
 # Itertuple randi
