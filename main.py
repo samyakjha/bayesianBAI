@@ -21,8 +21,9 @@ arm_priori_mean_vectorized = numpy.vectorize(StochasticBanditsModules.arm_priori
 arm_variance_square_vectorized = numpy.vectorize(StochasticBanditsModules.arm_variance_square)
 arm_posterior_variance_square_vectorized = numpy.vectorize(StochasticBanditsModules.arm_posterior_variance_square)
 
+arm_mean_vectorized.type
 # Main Body of Code: Simulation Work
-
+"""
 probability_array_freq = numpy.array([])
 probability_array_bayes = numpy.array([])
 
@@ -126,3 +127,4 @@ matplotlib.pyplot.plot(horizon_vals, probability_array_freq, label="FreqElim2")
 matplotlib.pyplot.xlabel("Horizon")
 matplotlib.pyplot.ylabel("Probability of Misidentification of Optimal Arm")
 matplotlib.pyplot.savefig("analysis.png")
+"""
