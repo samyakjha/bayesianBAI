@@ -4,11 +4,12 @@ import math
 
 # noinspection PyTypeChecker
 class GaussianArm:
-    def __init__(self, priori_mean,variance, priori_variance=0.5, silent=False):
+    def __init__(self, priori_mean,variance, priori_variance=0.5):
         self.variance = variance
         self.mean = np.random.normal(priori_mean, math.sqrt(priori_variance))
         self.priori_mean = priori_mean
         self.priori_variance = priori_variance
+        self.silent = False
         #self.environment = environment
         #self.history = numpy.array([])
         #self.silent = silent
@@ -40,9 +41,17 @@ class GaussianArm:
     def posterior_mean(self, num_samps, sum_samps):
         n = num_samps
         pv = self.posterior_variance(n)
-        return pv*(self.priori_mean/self.priori_variance + sum_samps/self.variance)
+        if not self.silent:
+            return pv*(self.priori_mean/self.priori_variance + sum_samps/self.variance)
+        else:
+            return -10e5
+
     def get_variance(self):
         return self.variance
+    
+    def deactivate(self):
+        self.silent = True
+        return
 """
 class PrioriGaussianArm(GaussianArm):
 

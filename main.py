@@ -2,11 +2,10 @@
 import numpy as np
 import pandas as pd
 from tqdm import tqdm
-import numpy
-import pandas
-import StochasticBanditsModules
-import StochasticBanditsPolicies
-import matplotlib.pyplot
+import StochasticBanditsModules2
+#import StochasticBanditsPolicies
+import matplotlib.pyplot as plt
+import bayesElim
 
 horizon_vals = [25, 50, 75, 100, 125, 150, 175, 200]
 N = 5000

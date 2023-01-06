@@ -18,18 +18,18 @@ class Environment:
 
 # noinspection PyTypeChecker
 class GaussianArm:
-    def __init__(self, environment, mean, variance_square=0.5, silent=False):
+    def __init__(self, mean, variance_square=0.5, silent=False):
         self.mean = mean
         self.variance_square = variance_square
-        self.environment = environment
+        #self.environment = environment
         self.history = numpy.array([])
         self.silent = silent
-
+        """
         if silent is False:
             environment.K = numpy.append(environment.K, self)
         else:
             pass
-
+        """
     @classmethod
     def sum_val(cls, arm):
         return numpy.sum(arm.history)
@@ -56,7 +56,7 @@ class GaussianArm:
 
 class PrioriGaussianArm(GaussianArm):
 
-    def __init__(self, environment, priori_mean, priori_variance_square=0.5, silent=False):
+    def __init__(self, priori_mean, priori_variance_square=0.5, silent=False):
         self.priori_mean = priori_mean
         self.priori_variance_square = priori_variance_square
 
@@ -65,7 +65,7 @@ class PrioriGaussianArm(GaussianArm):
         self.posterior_mean = mean
         self.posterior_variance_square = 0.5
 
-        super().__init__(environment, mean, 0.5, silent)
+        super().__init__(mean, 0.5, silent)
 
 
 def arm_mean(arm_p):
