@@ -4,7 +4,7 @@ import StochasticBanditsModules2
 #from seq_halving import seqHalving
 from bayesElim import BanditInstance, makeBandits, bandit_vars, bayesElim
 from bayesElim2 import bayesElim2
-#from tqdm import tqdm
+from tqdm import tqdm
 
 N_runs = 50000
 
@@ -21,7 +21,7 @@ num_mis_bayes = np.zeros(100)
 num_mis_bayes2 = np.zeros(100)
 #print(maxArm)
 
-for run in range(N_runs):
+for run in tqdm(range(N_runs)):
     #priori_means = np.array([1/2**i for i in range(8)])
     #var_list = np.array([0.5 for i in range(8)])
     banditlist_exp = makeBandits(priori_means, var_list)
