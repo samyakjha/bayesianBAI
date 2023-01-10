@@ -11,7 +11,7 @@ class GaussianArm:
         self.priori_variance = priori_variance
         self.silent = False
         #self.environment = environment
-        #self.history = numpy.array([])
+        self.history = np.array([])
         #self.silent = silent
         """
         if silent is False:
@@ -58,6 +58,10 @@ class GaussianArm:
     
     def activate(self):
         self.silent = False
+        return
+
+    def add_to_history(self, sampling):
+        self.history = np.append(self.history, sampling)
         return
 """
 class PrioriGaussianArm(GaussianArm):
