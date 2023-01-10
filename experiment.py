@@ -6,7 +6,7 @@ from bayesElim import BanditInstance, makeBandits, bandit_vars, bayesElim
 
 N_runs = 15000
 
-budget = [(50 + 50*i) for i in range(0)]
+budget = [(50 + 50*i) for i in range(30)]
 
 priori_means = np.array([1/2**i for i in range(8)])
 var_list = np.array([0.5 for i in range(8)])
