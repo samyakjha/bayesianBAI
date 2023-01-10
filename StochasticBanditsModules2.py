@@ -52,6 +52,13 @@ class GaussianArm:
     def deactivate(self):
         self.silent = True
         return
+    
+    def get_mean(self):
+        return self.mean
+    
+    def activate(self):
+        self.silent = False
+        return
 """
 class PrioriGaussianArm(GaussianArm):
 
@@ -66,7 +73,9 @@ class PrioriGaussianArm(GaussianArm):
 
         super().__init__(mean, 0.5, silent)
 """
-
-
-
+"""
+a = GaussianArm(0.5, 0.5)
+for i in range(5):
+    print(a.get_mean())
+"""
 # TODO: BernoulliArm, BetaArm, ExponentialArm, GammaArm, PoissonArm, UniformArm
