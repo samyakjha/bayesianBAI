@@ -6,7 +6,7 @@ from bayesElim import BanditInstance, makeBandits, bandit_vars, bayesElim
 from bayesElim2 import bayesElim2
 from tqdm import tqdm
 
-N_runs = 50000
+N_runs = 10000
 
 budget = [(50 + 50*i) for i in range(100)]
 
@@ -45,6 +45,7 @@ plt.plot(budget, log_prob_mis_bayes , color = 'red', label = 'bayesElim')
 plt.plot(budget, log_prob_mis_bayes2, color = 'blue', label = 'bayesElim2')
 plt.xlabel('budget values')
 plt.ylabel('log expected error probability')
+plt.yscale('log')
 plt.legend()
 plt.savefig('plot_comb_bayes_test.png', dpi=300, bbox_inches='tight')
 plt.show()
