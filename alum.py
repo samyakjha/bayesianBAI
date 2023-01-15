@@ -107,7 +107,7 @@ class BayesAlumEnv:
             phase = i + 1
             arm_list_size = len(arm_list_expand)
             b_list = numpy.array([arm_list_expand[0], arm_list_expand[numpy.ceil(arm_list_size / 3), arm_list_expand[numpy.floor(2*arm_list_size/3)], arm_list_expand[arm_list_size-1]]])
-re
+            for pull in range(budget):
 
 
-        return
+
