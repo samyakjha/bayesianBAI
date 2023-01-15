@@ -9,8 +9,10 @@ class BanditInstance:
         self.banditlist = banditlist
         self.K = len(banditlist)
         self.varlist = bandit_vars(banditlist)
-        self.activelist = np.ones(len(banditlist))
-        self.meanlist = [self.banditlist[i].get_mean() for i in range(self.K)]
+        self.activelist = np.ones(len(banditlist)).astype(int)
+        self.meanlist = np.array([self.banditlist[i].get_mean() for i in range(self.K)])
+        self.priori_meanlist = np.array([self.banditlist[i].get_priori_mean() for i in range(self.K)])
+        
     
     def deact(self, index):
         self.activelist[index] = 0
@@ -20,6 +22,36 @@ class BanditInstance:
         self.activelist[index] = 1
         self.banditlist[index].activate()
         return
+
+    def active_indices(self):
+        indlist = []
+        for i in range(self.K):
+            if self.activelist[i]==1:
+                indlist.append(i)
+        return indlist
+
+    def four_samples(self):
+        act_ind = self.active_indices()
+        numAct = len(act_ind)
+        indices = [act_ind[0], act_ind[math.ceil(numAct/3)], act_ind[2*numAct//3], act_ind[numAct-1]]
+        sampList = []
+        for index in indices:
+            sampList.append(self.banditlist[index])
+
+        return sampList
+    
+    def deact_in_series(self, start, end):
+        act = self.active_indices()
+        for ind in range(start, end):
+            self.deact(act[ind])
+        return 
+    def numact(self):
+        return np.sum(self.activelist)
+    
+
+
+
+
         
 
 
@@ -39,6 +71,12 @@ def bandit_vars(banditlist):
         varlist[i] = banditlist[i].get_variance()
     return varlist
 
+def bandit_means(banditlist):
+    K = len(banditlist)
+    meanlist = np.zeros(K)
+    for i in range(K):
+        meanlist[i] = banditlist[i].get_mean()
+    return meanlist
 
 
 def bayesElim(bandits, n):
@@ -108,18 +146,18 @@ def bayesElim(bandits, n):
         
         
 
-"""
+
 pm_list = np.array([1, 2, 3, 4])
 v_list = np.array([0.25 for i in range(8)])
 banditList = makeBandits(pm_list, v_list)
 bandits = BanditInstance(banditList)
-#print(bandits.K)
-best = bayesElim(bandits, 25)
-print(best.mean)
+#print(bandits.active_indices())
+#best = bayesElim(bandits, 25)
+#print(best.mean)
 #print(np.floor((25/(np.log(3)/np.log(2))*bandits.varlist/np.sum(bandits.varlist))).astype(int))
 
 #print(bandit_vars(makeBandits(pm_list, v_list)))
-"""
+
 """
 test = np.array([])
 for i in range(3):

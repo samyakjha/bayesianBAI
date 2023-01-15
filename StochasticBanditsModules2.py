@@ -55,6 +55,9 @@ class GaussianArm:
     
     def get_mean(self):
         return self.mean
+
+    def get_priori_mean(self):
+        return self.priori_mean
     
     def activate(self):
         self.silent = False

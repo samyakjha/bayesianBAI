@@ -32,7 +32,7 @@ def seqHalving(bandits, n):
     for round in range(R):
         numSamp_list = round_budget*bandits.activelist/np.sum(bandits.activelist)
         numSamp_list = np.floor(numSamp_list).astype(int)
-        print('Sampling' , numSamp_list)
+        #print('Sampling' , numSamp_list)
         num_act = np.sum(bandits.activelist)
         for i in range(K):
             

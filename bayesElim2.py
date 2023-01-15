@@ -1,7 +1,7 @@
 import numpy as np
 import math
 from StochasticBanditsModules2 import GaussianArm
-from bayesElim import BanditInstance, makeBandits, bandit_vars
+from bayesElim import BanditInstance, makeBandits, bandit_vars, bandit_means
 
 def bayesElim2(bandits, n):
     K = bandits.K
