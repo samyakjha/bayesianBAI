@@ -21,7 +21,7 @@ maxArm = max(bandits_exp.meanlist)
 num_mis_bayes = np.zeros(10)
 num_mis_bayes2 = np.zeros(10)
 #print(maxArm)
-
+"""
 for run in tqdm(range(N_runs)):
     #priori_means = np.array([1/2**i for i in range(8)])
     #var_list = np.array([0.5 for i in range(8)])
@@ -41,24 +41,25 @@ log_prob_mis_bayes = np.log((num_mis_bayes/N_runs))
 log_prob_mis_bayes2 = np.log((num_mis_bayes2/N_runs))
 #print(log_prob_mis)
 #print(num_mis)
-
-def unimodal_bandits(bandits):
+"""
+def unimodal_bandits_np(bandits):
     banditMeans = bandits.meanlist
-    best = np.max(banditMeans)
-    bestInd,  =  np.where(np.isclose(banditMeans, best))
+    bestInd = np.argmax(banditMeans)
     arr1 = banditMeans[:bestInd]
     arr2 = banditMeans[bestInd:]
     sort1 = np.argsort(arr1)
     sort2 = np.argsort(-arr2)
-    sorted = np.concatenate(sort1, sort2)
-    unimodalBanditsList = bandits.banditlist[sorted]
-    return BanditInstance(unimodalBanditsList)
+    sorted = np.concatenate((sort1, sort2))
+    unimodalBandits = []
+    for ind in sorted:
+        unimodalBandits.append(bandits.banditlist[ind])
+    return BanditInstance(unimodalBandits)
 
 #def bayesALUM(bandits)
 
 
 
-
+"""
 plt.plot(budget, log_prob_mis_bayes , color = 'red', label = 'bayesElim')
 plt.plot(budget, log_prob_mis_bayes2, color = 'blue', label = 'bayesElim2')
 plt.xlabel('budget values')
@@ -67,5 +68,5 @@ plt.legend()
 plt.yscale('log')
 plt.savefig('plot_comb_bayes_test.png', dpi=300, bbox_inches='tight')
 plt.show()
-
+"""
 

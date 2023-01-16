@@ -46,6 +46,12 @@ class GaussianArm:
         else:
             return -10e5
 
+    def sample_mean(self, num_samps, sum_samps):
+        if not self.silent:
+            return sum_samps/num_samps
+        else:
+            return -10e5
+    
     def get_variance(self):
         return self.variance
     

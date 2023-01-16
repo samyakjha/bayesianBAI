@@ -4,10 +4,12 @@ from StochasticBanditsModules2 import GaussianArm
 from bayesElim import BanditInstance, makeBandits
 
 def ALUM(bandits, budget):
-    L = math.floor(math.log(bandits.K/3)/math.log(3/2))
+    L = math.floor(math.log((bandits.K)/3)/math.log(3/2))
+    #print(L)
     numSamp = [2**(L-2)*budget//3**(L-1) for i in range(1,3)]
     for l in range(3,L+2):
         numSamp.append(2**(L-(l-1))*budget//3**(L-(l-2)))
+    #print(numSamp)
     for l in range(1, L+1):
         sampledBandits = bandits.four_samples()
         sampledMean = np.array([])
@@ -22,6 +24,9 @@ def ALUM(bandits, budget):
     active = bandits.active_indices()
     sampledMeans = np.array([bandits.banditlist[ind].pullArm_sum(numSamp[-1]) for ind in active])
     maxInd = np.argmax(sampledMeans)
+
+    for j in range(bandits.K):
+        bandits.reset(j)
 
     return bandits.banditlist[maxInd]
     

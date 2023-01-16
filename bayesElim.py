@@ -18,6 +18,7 @@ class BanditInstance:
         self.activelist[index] = 0
         self.banditlist[index].deactivate()
         return 
+    
     def reset(self, index):
         self.activelist[index] = 1
         self.banditlist[index].activate()
@@ -32,12 +33,12 @@ class BanditInstance:
 
     def four_samples(self):
         act_ind = self.active_indices()
+        #print(self.active_indices())
         numAct = len(act_ind)
-        indices = [act_ind[0], act_ind[math.ceil(numAct/3)], act_ind[2*numAct//3], act_ind[numAct-1]]
-        sampList = []
-        for index in indices:
-            sampList.append(self.banditlist[index])
-
+        indices = [act_ind[0], act_ind[math.ceil(numAct/3)-1], act_ind[2*numAct//3-1], act_ind[numAct-1]]
+        #print(indices)
+        sampList = [self.banditlist[ind] for ind in indices]
+        
         return sampList
     
     def deact_in_series(self, start, end):
@@ -45,6 +46,7 @@ class BanditInstance:
         for ind in range(start, end):
             self.deact(act[ind])
         return 
+    
     def numact(self):
         return np.sum(self.activelist)
     
