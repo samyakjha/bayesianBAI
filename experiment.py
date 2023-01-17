@@ -50,10 +50,8 @@ def unimodal_bandits_np(bandits):
     sort1 = np.argsort(arr1)
     sort2 = np.argsort(-arr2)
     sorted = np.concatenate((sort1, sort2))
-    unimodalBandits = []
-    for ind in sorted:
-        unimodalBandits.append(bandits.banditlist[ind])
-    return BanditInstance(unimodalBandits)
+    bandits.rearrange(sorted)
+    return
 
 #def bayesALUM(bandits)
 

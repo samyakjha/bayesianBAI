@@ -33,10 +33,10 @@ class BanditInstance:
 
     def four_samples(self):
         act_ind = self.active_indices()
-        #print(self.active_indices())
+        print('Active', self.active_indices())
         numAct = len(act_ind)
         indices = [act_ind[0], act_ind[math.ceil(numAct/3)-1], act_ind[2*numAct//3-1], act_ind[numAct-1]]
-        #print(indices)
+        print('Sampled', indices)
         sampList = [self.banditlist[ind] for ind in indices]
         
         return sampList
@@ -49,6 +49,21 @@ class BanditInstance:
     
     def numact(self):
         return np.sum(self.activelist)
+
+    def rearrange(self, new_indices):
+        old_banditlist = self.banditlist
+        new_banditlist = []
+        for ind in new_indices:
+            new_banditlist.append(old_banditlist[ind])
+        self.banditlist = new_banditlist
+        self.varlist = bandit_vars(self.banditlist)
+        self.activelist = np.ones(len(self.banditlist)).astype(int)
+        self.meanlist = np.array([self.banditlist[i].get_mean() for i in range(self.K)])
+        self.priori_meanlist = np.array([self.banditlist[i].get_priori_mean() for i in range(self.K)])
+        return 
+        
+
+
     
 
 

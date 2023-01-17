@@ -7,7 +7,7 @@ from alum import ALUM
 from tqdm import tqdm
 from experiment import unimodal_bandits_np
 k_star = 6
-K = 20
+K = 30
 nu_star, nu_one, nu_K = 0.7, 0.1, 0.3
 priori_means = [nu_one]
 for ind in range(2, k_star):
@@ -18,14 +18,14 @@ for ind in range(k_star+1, K):
 priori_means.append(nu_K)
 
 
-
+num_budget = 20
 vars = [0.5 for i in range(len(priori_means))]
-N_runs = 15000
+N_runs = 50
 Bandits = BanditInstance(makeBandits(priori_means, vars))
 Bandits = unimodal_bandits_np(Bandits)
-budget = [(250 + 250*i) for i in range(50)]
+budget = [(250 + 250*i) for i in range(num_budget)]
 
-num_mis_alum = np.zeros(50)
+num_mis_alum = np.zeros(num_budget)
 #print(maxArm)
 
 for run in tqdm(range(N_runs)):
@@ -33,10 +33,12 @@ for run in tqdm(range(N_runs)):
     #var_list = np.array([0.5 for i in range(8)])
     banditlist_exp = makeBandits(priori_means, vars)
     bandits_exp = BanditInstance(banditlist_exp)
+    unimodal_bandits_np(bandits_exp)
     maxArm = max(bandits_exp.meanlist)
+    print('bandit means orig', [bandit.get_mean() for bandit in bandits_exp.banditlist])
     
     
-    for j in range(50):
+    for j in range(num_budget):
         if abs(ALUM(bandits_exp, budget[j]).get_mean()-maxArm)>10e-4:
             num_mis_alum[j] += 1
         """
@@ -45,6 +47,7 @@ for run in tqdm(range(N_runs)):
         """
     
 prob_mis_alum = num_mis_alum/N_runs
+print(prob_mis_alum)
 #log_prob_mis_bayes2 = np.log((num_mis_bayes2/N_runs))
 
 #print(num_mis)
