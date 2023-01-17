@@ -33,10 +33,10 @@ class BanditInstance:
 
     def four_samples(self):
         act_ind = self.active_indices()
-        print('Active', self.active_indices())
+        #print('Active', self.active_indices())
         numAct = len(act_ind)
         indices = [act_ind[0], act_ind[math.ceil(numAct/3)-1], act_ind[2*numAct//3-1], act_ind[numAct-1]]
-        print('Sampled', indices)
+        #print('Sampled', indices)
         sampList = [self.banditlist[ind] for ind in indices]
         
         return sampList

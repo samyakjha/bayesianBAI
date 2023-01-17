@@ -52,7 +52,7 @@ def unimodal_bandits_np(bandits, k_star=None):
     sort2 = np.argsort(-arr2)
     sort2 += bestInd +1
     sorted = np.concatenate((sort1, sort2))
-    print('Sorted unimodal', sorted)
+    #print('Sorted unimodal', sorted)
     bandits.rearrange(sorted)
     return
 

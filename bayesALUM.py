@@ -4,7 +4,7 @@ from StochasticBanditsModules2 import GaussianArm
 from bayesElim import BanditInstance, makeBandits
 
 
-def ALUM(bandits, budget):
+def bayesALUM(bandits, budget):
     L = math.floor(math.log((bandits.K)/3)/math.log(3/2))
     #print(L
     numSamp = [2**(L-2)*budget//3**(L-1) for i in range(1,3)]
@@ -13,31 +13,26 @@ def ALUM(bandits, budget):
     #print(numSamp)
     for l in range(1, L+1):
         sampledBandits = bandits.four_samples()
-        sampledMean = np.array([])
+        postMean = np.array([])
         for bandit in sampledBandits:
-            sampledMean = np.append(sampledMean, bandit.pullArm_sum(numSamp[l-1]//4))
+            sum_samp = bandit.pullArm_sum(numSamp[l-1]//4)
+            post_mean = bandit.posterior_mean(numSamp[l-1]//4, sum_samp)
+            postMean = np.append(postMean, post_mean)
         #print('Sampled means at round ' ,sampledMean/(numSamp[l-1]//4))
-        bestind = np.argmax(sampledMean)
+        bestind = np.argmax(postMean)
         if bestind == 0 or bestind == 1:
-            bandits.deact_in_series(2*bandits.numact()//3, bandits.numact())
+            bandits.deact_in_series(2*bandits.numact()//3 + 1, bandits.numact())
         else:
             bandits.deact_in_series(0, math.ceil(bandits.numact()/3))
         
     active = bandits.active_indices()
     #print('Active at end', active)
-    sampledMeans = np.array([bandits.banditlist[ind].pullArm_sum(numSamp[-1]) for ind in active])/(numSamp[L]//4)
+    postMeans = np.array([bandits.banditlist[ind].posterior_mean(numSamp[-1]//3, bandits.banditlist[ind].pullArm_sum(numSamp[-1]//3)) for ind in active])
     #print('Sampled mean end', sampledMeans)
-    maxInd = active[np.argmax(sampledMeans)]
+    maxInd = active[np.argmax(postMeans)]
     #print('max', maxInd)
 
     for j in range(bandits.K):
         bandits.reset(j)
 
     return bandits.banditlist[maxInd]
-    
-
-
-
-
-
-    
