@@ -2,12 +2,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 import math
 from StochasticBanditsModules2 import GaussianArm
-from bayesElim import BanditInstance, makeBandits
+from bayesElim import BanditInstance, makeBandits, bayesElim
 from alum import ALUM
 from tqdm import tqdm
 from experiment import unimodal_bandits_np
-k_star = 6
-K = 30
+k_star = 8
+K = 50
 nu_star, nu_one, nu_K = 0.7, 0.1, 0.3
 priori_means = [nu_one]
 for ind in range(2, k_star):
@@ -20,12 +20,13 @@ priori_means.append(nu_K)
 
 num_budget = 20
 vars = [0.5 for i in range(len(priori_means))]
-N_runs = 50
+N_runs = 5000
 Bandits = BanditInstance(makeBandits(priori_means, vars))
 Bandits = unimodal_bandits_np(Bandits)
 budget = [(250 + 250*i) for i in range(num_budget)]
 
 num_mis_alum = np.zeros(num_budget)
+num_mis_bayes = ap.zeros(num_budget)
 #print(maxArm)
 
 for run in tqdm(range(N_runs)):
@@ -41,12 +42,16 @@ for run in tqdm(range(N_runs)):
     for j in range(num_budget):
         if abs(ALUM(bandits_exp, budget[j]).get_mean()-maxArm)>10e-4:
             num_mis_alum[j] += 1
+        if abs(bayesElim(bandits_exp, budget[j]).get_mean()-maxArm)>10e-4:
+            num_mis_bayes[j] += 1
+        
         """
         if abs(bayesElim2(bandits_exp, budget[j]).get_mean()-maxArm)>10e-4:
             num_mis_bayes2[j] += 1
         """
     
 prob_mis_alum = num_mis_alum/N_runs
+prob_mis_bayes = num_mis_bayes/N_runs
 print(prob_mis_alum)
 #log_prob_mis_bayes2 = np.log((num_mis_bayes2/N_runs))
 
@@ -54,9 +59,10 @@ print(prob_mis_alum)
 
 #print(bandit.get_mean())
 plt.plot(budget, prob_mis_alum, color = 'cyan', label = 'ALUM')
+plt.plot(budget, prob_mis_bayes, color = 'red', label = 'bayesElim')
 plt.xlabel('budget values')
 plt.ylabel('expected error probability')
 plt.legend()
 plt.yscale('log')
-plt.savefig('ALUMplot.png', dpi=300, bbox_inches='tight')
+plt.savefig('ALUMandElimplot.png', dpi=300, bbox_inches='tight')
 plt.show()

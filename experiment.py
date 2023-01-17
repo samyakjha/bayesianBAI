@@ -42,14 +42,17 @@ log_prob_mis_bayes2 = np.log((num_mis_bayes2/N_runs))
 #print(log_prob_mis)
 #print(num_mis)
 """
-def unimodal_bandits_np(bandits):
+def unimodal_bandits_np(bandits, k_star=None):
     banditMeans = bandits.meanlist
     bestInd = np.argmax(banditMeans)
     arr1 = banditMeans[:bestInd]
-    arr2 = banditMeans[bestInd:]
+    arr2 = banditMeans[bestInd+1:]
     sort1 = np.argsort(arr1)
+    sort1 = np.append(sort1, bestInd)
     sort2 = np.argsort(-arr2)
+    sort2 += bestInd +1
     sorted = np.concatenate((sort1, sort2))
+    print('Sorted unimodal', sorted)
     bandits.rearrange(sorted)
     return
 

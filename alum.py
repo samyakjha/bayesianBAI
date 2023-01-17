@@ -25,7 +25,7 @@ def ALUM(bandits, budget):
         
     active = bandits.active_indices()
     print('Active at end', active)
-    sampledMeans = np.array([bandits.banditlist[ind].pullArm_sum(numSamp[-1]) for ind in active])
+    sampledMeans = np.array([bandits.banditlist[ind].pullArm_sum(numSamp[-1]) for ind in active])/(numSamp[L]//4)
     print('Sampled mean end', sampledMeans)
     maxInd = active[np.argmax(sampledMeans)]
     print('max', maxInd)
